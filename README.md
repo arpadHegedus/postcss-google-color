@@ -35,7 +35,7 @@ Using [Gulp].
 ```js
 var gulp        = require('gulp'),
     postcss     = require('gulp-postcss'),
-    googleColor = require('postcss-google-color);
+    googleColor = require('postcss-google-color');
 
 gulp.task('css', function() {
     gulp.src('path/to/dev-css').
