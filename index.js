@@ -1,7 +1,6 @@
 var postcss = require('postcss');
-
-module.exports = postcss.plugin('postcss-google-color', function(opt) {
-    var palette = {
+module.exports = postcss.plugin('postcss-google-color', (opt) => {
+    let palette = {
         red: {
             50:     '#fde0dc',
             100:    '#f9bdbb',
@@ -298,36 +297,32 @@ module.exports = postcss.plugin('postcss-google-color', function(opt) {
         }
     };
     if(typeof(opt) === 'undefined') { opt = {}; }
-    var defaultLevel = 600;
-    var fallbackColor = '#ccc';
-    if(opt.hasOwnProperty(defaultLevel)) { defaultLevel = opt.defaultLevel; }
-    if(opt.hasOwnProperty(fallbackColor)) { fallbackColor = opt.fallbackColor; }
-    
-    function loop(rule) {
-        rule.walkDecls(function(decl) {
-            if(decl.value.indexOf('google-color') !== -1) {
-                var googleColor = false;
-                var color = fallbackColor;
-                var level = defaultLevel;
-                var val = decl.value.split('google-color(');
-                val = val[1].split(')'); val = val[0].split(','); val[0] = val[0].trim();
-                if(palette[val[0]]) {
-                    if(val[1]) { 
-                        val[1] = val[1].trim();
-                        if(palette[val[0]][val[1]]) { level = val[1]; }
+    let defaultLevel = 600, fallbackColor = '#ccc';
+    if(opt.hasOwnProperty('defaultLevel')) { defaultLevel = opt.defaultLevel; }
+    if(opt.hasOwnProperty('fallbackColor')) { fallbackColor = opt.fallbackColor; }
+    return (css) => {
+        function parse(rule) {
+            rule.walkDecls((decl) => {
+                [decl.prop, decl.value].forEach((v, i) => {
+                    while(v.indexOf('google-color(') !== -1) {
+                        v = walkGoogleColors(v);
                     }
-                    color = palette[val[0]][level];
-                }                
-                decl.value = color;
+                    if(i === 0) { decl.prop = v; } else { decl.value = v; }
+                });
+            });
+        }
+        function walkGoogleColors(string) {
+            let color = fallbackColor, level = defaultLevel, pieces = string.split('google-color('), v = pieces[1].split(')');
+            pieces.splice(1, 1);
+            if(v[1]) { pieces.push(v[1]); } v = v[0].trim().split(','); v.forEach((va, i) => { v[i] = va.trim(); });
+            if(palette[v[0]]) { 
+                if(v[1] && palette[v[0]][v[1]]) { level = v[1]; } 
+                color = palette[v[0]][level];
             }
-        });
+            string = pieces[0]; string = string + color; if(pieces[1]) { string = string + pieces[1]; }
+            return string;
+        }
+        css.walkAtRules((rule) => { parse(rule); });
+        css.walkRules((rule) => { parse(rule); });
     }
-    return function(css) {
-        css.walkAtRules(function(rule) {
-            loop(rule);
-        });
-        css.walkRules(function(rule) {
-            loop(rule);
-        });
-    }   
 });
