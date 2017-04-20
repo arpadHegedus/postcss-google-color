@@ -312,14 +312,12 @@ module.exports = postcss.plugin('postcss-google-color', (opt) => {
             });
         }
         function walkGoogleColors(string) {
-            let color = fallbackColor, level = defaultLevel, pieces = string.split('google-color('), v = pieces[1].split(')');
-            pieces.splice(1, 1);
-            if(v[1]) { pieces.push(v[1]); } v = v[0].trim().split(','); v.forEach((va, i) => { v[i] = va.trim(); });
-            if(palette[v[0]]) { 
-                if(v[1] && palette[v[0]][v[1]]) { level = v[1]; } 
-                color = palette[v[0]][level];
-            }
-            string = pieces[0]; string = string + color; if(pieces[1]) { string = string + pieces[1]; }
+            let color = fallbackColor, level = defaultLevel;
+            string = string.replace(/google\-color\(([^\,\)]+)(\,([\s]+)?[^\)]+)?\)/ig, (str, clr, lvl = null) => {
+                lvl = (lvl)? lvl.replace(/[\,\s]+/ig, '') : defaultLevel;
+                clr = (googlePalette.hasOwnProperty(clr) && googlePalette[clr].hasOwnProperty(lvl))? googlePalette[clr][lvl] : fallbackColor;
+                return clr;
+            });
             return string;
         }
         css.walkAtRules((rule) => { parse(rule); });
