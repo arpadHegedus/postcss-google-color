@@ -1,7 +1,7 @@
 {
   "name": "postcss-google-color",
   "description": "A function to get google palette colors",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "maintainers": [
     {
       "name": "Arpad Hegedus",

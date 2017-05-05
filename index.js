@@ -315,7 +315,7 @@ module.exports = postcss.plugin('postcss-google-color', (opt) => {
             let color = fallbackColor, level = defaultLevel;
             string = string.replace(/google\-color\(([^\,\)]+)(\,([\s]+)?[^\)]+)?\)/ig, (str, clr, lvl = null) => {
                 lvl = (lvl)? lvl.replace(/[\,\s]+/ig, '') : defaultLevel;
-                clr = (googlePalette.hasOwnProperty(clr) && googlePalette[clr].hasOwnProperty(lvl))? googlePalette[clr][lvl] : fallbackColor;
+                clr = (palette.hasOwnProperty(clr) && palette[clr].hasOwnProperty(lvl))? palette[clr][lvl] : fallbackColor;
                 return clr;
             });
             return string;
