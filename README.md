@@ -1,4 +1,4 @@
-[PostCSS] plugin for easily invoking the colors on the [Google Material design color palette].
+A [PostCSS] plugin for easily invoking the colors on the [Google Material design color palette].
 
 [PostCSS]: https://github.com/postcss/postcss
 [Gulp]: https://github.com/gulpjs/gulp
