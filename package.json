@@ -1,0 +1,20 @@
+{
+  "name": "postcss-google.color",
+  "description": "A postcss plugin for easily invoking the colors on the Google Material design color palette",
+  "version": "1.1.0",
+  "maintainers": [
+    {
+      "name": "Arpad Hegedus",
+      "email": "hegedus.arpad@gmail.com",
+      "web": "http://arpadhegedus.com"
+    }
+  ],
+  "main": "index.js",
+  "repository" : { 
+    "type": "git", 
+    "url": "https://github.com/arpadHegedus/postcss-google-color.git"
+  },
+  "dependencies": {
+    "postcss": "^6.0.1"
+  }
+}
