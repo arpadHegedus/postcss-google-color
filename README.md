@@ -1,5 +1,3 @@
-#postcss-google-color
-
 [PostCSS] plugin for easily invoking the colors on the [Google Material design color palette].
 
 [PostCSS]: https://github.com/postcss/postcss
