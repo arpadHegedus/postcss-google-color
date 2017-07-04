@@ -1,3 +1,6 @@
+# 1.1.1 - 2017-07-04
+* Fixed: small bug with identifying calls
+
 # 1.1.0 - 2017-05-23
 * Rewrite and simplification
 
