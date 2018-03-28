@@ -17,6 +17,9 @@ module.exports = postcss.plugin('postcss-google-color', opt => root => {
                 (string, color, level = null) => {
                     let colors = opt.palette;
                     color = color.replace(/[\s]+/ig, '').toLowerCase();
+                    if (color === 'black' || color === 'white') {
+                        return color
+                    }
                     if (level) {
                         level = level.replace(/[\,\s]+/ig, '');
                     } else {

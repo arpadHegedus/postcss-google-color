@@ -1,6 +1,6 @@
 {
     "name": "postcss-google-color",
-    "version": "2.0.0",
+    "version": "2.0.1",
     "description": "A PostCSS plugin for easily invoking the colors on the Google Material design color palette",
     "main": "index.js",
     "license": "MIT",
